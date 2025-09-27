@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alles Gute zum 3-Monatigen Schildi❤️❤️❤️</title>
+  <style>
+    :root{
+      --bg1:#40E0D0; /* türkis */
+      --bg2:#20B2AA; /* dunkleres türkis */
+      --card:#ffffffcc;
+      --accent:#d6336c;
+      --muted:#5c5c5c;
+    }
+    html, body {
+      margin:0;
+      padding:0;
+      height:100%;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:"Segoe UI", Roboto, Arial, sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      overflow:hidden;
+    }
+
+    .card {
+      width:90%;
+      max-width:760px;
+      background:var(--card);
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.12);
+      padding:28px;
+      text-align:center;
+      position:relative;
+      z-index:1; /* Text über Herzchen */
+    }
+    img.hero{
+      max-width:150px;
+      margin:0 auto 12px auto;
+      display:block;
+      border-radius:15px;
+    }
+    h1{margin:12px 0 8px 0;font-size:2rem;color:var(--accent)}
+    p.lead{margin:0 0 18px 0;color:var(--muted);font-size:1.05rem}
+    .countdown{display:flex;justify-content:center;gap:12px;margin:18px 0 24px 0;font-weight:600;font-size:1.1rem}
+    .countdown .unit{background:rgba(0,0,0,0.05);padding:12px 14px;border-radius:10px;min-width:70px}
+    .countdown .num{font-size:1.3rem;display:block}
+    .audio-wrap{margin:12px 0 18px 0}
+    audio{width:100%;outline:none;border-radius:10px}
+
+    /* Herzchen Animation */
+    .hearts{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:visible;
+      z-index:0;
+    }
+    .heart{
+      position:absolute;
+      width:18px;
+      height:18px;
+      transform:translate(-50%,-50%) scale(0.9);
+      opacity:0.8;
+      animation:rise 4s linear infinite;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,0.08));
+      color:#d6336c;
+    }
+    @keyframes rise{
+      0%{transform:translate(-50%,20px) scale(0.8);opacity:0}
+      10%{opacity:1}
+      50%{transform:translate(-50%,-140px) scale(1.05)}
+      100%{transform:translate(-50%,-320px) scale(0.6);opacity:0}
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" aria-hidden="true"></div>
+
+  <div class="card" id="card">
+    <img src="bild.png" alt="Herzbild" class="hero">
+    <h1>Alles Gute zum 3-Monatigen Schildi❤️❤️❤️</h1>
+    <p class="lead">Landung in Bergen</p>
+
+    <div class="countdown" aria-live="polite">
+      <div class="unit"><span class="num" id="days">--</span><span class="label">Tage</span></div>
+      <div class="unit"><span class="num" id="hours">--</span><span class="label">Stunden</span></div>
+      <div class="unit"><span class="num" id="minutes">--</span><span class="label">Minuten</span></div>
+      <div class="unit"><span class="num" id="seconds">--</span><span class="label">Sek.</span></div>
+    </div>
+
+    <p class="note">Um die Wartezeit zu verkürzen sind hier ein paar Geigenlieder :)</p>
+
+    <div class="audio-wrap">
+      <audio controls preload="none"><source src="song1.mp3" type="audio/mpeg"></audio>
+      <audio controls preload="none"><source src="song2.mp3" type="audio/mpeg"></audio>
+      <audio controls preload="none"><source src="song3.mp3" type="audio/mpeg"></audio>
+      <audio controls preload="none"><source src="song4.mp3" type="audio/mpeg"></audio>
+      <audio controls preload="none"><source src="song5.mp3" type="audio/mpeg"></audio>
+      <audio controls preload="none"><source src="song6.mp3" type="audio/mpeg"></audio>
+    </div>
+  </div>
+
+  <script>
+    // Countdown
+    const targetUtcMs = Date.UTC(2025, 9, 27, 10, 45, 0);
+    const elDays = document.getElementById('days');
+    const elHours = document.getElementById('hours');
+    const elMinutes = document.getElementById('minutes');
+    const elSeconds = document.getElementById('seconds');
+    const card = document.getElementById('card');
+
+    let reached = false;
+    function updateCountdown() {
+      const nowMs = Date.now();
+      let diff = targetUtcMs - nowMs;
+
+      if(diff <= 0){
+        if(!reached){
+          reached = true;
+          elDays.textContent = '00';
+          elHours.textContent = '00';
+          elMinutes.textContent = '00';
+          elSeconds.textContent = '00';
+          const msg = document.createElement('p');
+          msg.style.fontSize = '1.15rem';
+          msg.style.marginTop = '12px';
+          msg.innerHTML = '✨ Der Moment ist da — alles Liebe! ✨';
+          card.appendChild(msg);
+        }
+        return;
+      }
+
+      const totalSec = Math.floor(diff / 1000);
+      const days = Math.floor(totalSec / 86400);
+      const hours = Math.floor((totalSec % 86400)/3600);
+      const minutes = Math.floor((totalSec % 3600)/60);
+      const seconds = totalSec % 60;
+
+      elDays.textContent = String(days).padStart(2,'0');
+      elHours.textContent = String(hours).padStart(2,'0');
+      elMinutes.textContent = String(minutes).padStart(2,'0');
+      elSeconds.textContent = String(seconds).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown,1000);
+
+    // Herzchen erzeugen
+    const heartsContainer = document.querySelector('.hearts');
+    function createHeart(){
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (12 + Math.random()*12) + 'px';
+      heart.textContent = '❤️';
+      heartsContainer.appendChild(heart);
+      setTimeout(()=>{heartsContainer.removeChild(heart)},4000);
+    }
+    setInterval(createHeart,300);
+  </script>
+</body>
+</html>
